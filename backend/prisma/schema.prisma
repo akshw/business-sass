@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = ""
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+enum business_types{
+  Manufacturer
+  Shop
+  Services
+  Dealer
+  Distributer
+  Others
+}
+
+model User{
+  id String @id @default(uuid())
+  email String?
+  phone_no Int?
+  name String?
+  business_name String?
+  business_type business_types
+  business_details String?
+  images String?
+  video String?
+  shared SharedDetails[]
+}
+
+model SharedDetails{
+  id String @id @default(uuid())
+  Details User @relation(fields: [userId], references: [id])
+  userId String 
+}
